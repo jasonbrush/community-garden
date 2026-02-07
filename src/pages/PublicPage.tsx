@@ -7,6 +7,7 @@ import FormField from '@cloudscape-design/components/form-field'
 import Input from '@cloudscape-design/components/input'
 import Textarea from '@cloudscape-design/components/textarea'
 import Button from '@cloudscape-design/components/button'
+import Alert from '@cloudscape-design/components/alert'
 import { addGardenerPublic } from '../api/gardeners'
 
 type Status = 'idle' | 'submitting' | 'success' | 'error'
@@ -47,10 +48,10 @@ export function PublicPage() {
         experience: '',
         notes: '',
       })
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error(error)
       setStatus('error')
-      setErrorMsg(error?.message ?? 'Something went wrong.')
+      setErrorMsg(error instanceof Error ? error.message : 'Something went wrong.')
     }
   }
 
@@ -58,38 +59,44 @@ export function PublicPage() {
     <div style={{ maxWidth: 800, margin: '0 auto', padding: '2rem' }}>
       <Container>
         <Header variant="h1">Community Garden Waitlist</Header>
-        <Form
-          actions={
-            <SpaceBetween direction="horizontal" size="xs">
-              <Button
-                variant="primary"
-                formAction="submit"
-                loading={status === 'submitting'}
-                disabled={status === 'submitting'}
-              >
-                Join waitlist
-              </Button>
-            </SpaceBetween>
-          }
-          errorText={status === 'error' ? errorMsg ?? 'Something went wrong.' : undefined}
-          successText={status === 'success' ? 'Thanks! You’ve been added to the list.' : undefined}
-          onSubmit={handleSubmit}
-        >
-          <SpaceBetween size="s">
-            <FormField label="Name" description="Your full name" required>
+        {status === 'success' && (
+          <Alert type="success" dismissible onDismiss={() => setStatus('idle')}>
+            Thanks! You've been added to the list.
+          </Alert>
+        )}
+        <form onSubmit={handleSubmit}>
+          <Form
+            actions={
+              <SpaceBetween direction="horizontal" size="xs">
+                <Button
+                  variant="primary"
+                  formAction="submit"
+                  loading={status === 'submitting'}
+                  disabled={status === 'submitting'}
+                >
+                  Join waitlist
+                </Button>
+              </SpaceBetween>
+            }
+            errorText={status === 'error' ? errorMsg ?? 'Something went wrong.' : undefined}
+          >
+            <SpaceBetween size="s">
+            <FormField label="Name (required)" description="Your full name">
               <Input
                 value={form.name}
                 onChange={e => setForm(f => ({ ...f, name: e.detail.value }))}
                 placeholder="Jane Doe"
+                ariaRequired
               />
             </FormField>
 
-            <FormField label="Email" description="We’ll use this to contact you" required>
+            <FormField label="Email (required)" description="We’ll use this to contact you">
               <Input
                 type="email"
                 value={form.email}
                 onChange={e => setForm(f => ({ ...f, email: e.detail.value }))}
                 placeholder="jane@example.com"
+                ariaRequired
               />
             </FormField>
 
@@ -127,8 +134,9 @@ export function PublicPage() {
             </FormField>
 
             {/* CAPTCHA widget will go here later */}
-          </SpaceBetween>
-        </Form>
+            </SpaceBetween>
+          </Form>
+        </form>
       </Container>
     </div>
   )
