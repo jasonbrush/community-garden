@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Container from '@cloudscape-design/components/container'
 import Header from '@cloudscape-design/components/header'
 import SpaceBetween from '@cloudscape-design/components/space-between'
@@ -24,7 +24,7 @@ export function PublicPage() {
   const [status, setStatus] = useState<Status>('idle')
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
 
-  const handleSubmit = async (event: React.FormEvent) => {
+  const handleSubmit = async (event: CustomEvent) => {
     event.preventDefault()
     setStatus('submitting')
     setErrorMsg(null)
@@ -59,34 +59,35 @@ export function PublicPage() {
     <div style={{ maxWidth: 800, margin: '0 auto', padding: '2rem' }}>
       <Container>
         <Header variant="h1">Community Garden Waitlist</Header>
+
         {status === 'success' && (
           <Alert type="success" dismissible onDismiss={() => setStatus('idle')}>
-            Thanks! You've been added to the list.
+            Thanks! You&apos;ve been added to the list.
           </Alert>
         )}
-        <form onSubmit={handleSubmit}>
-          <Form
-            actions={
-              <SpaceBetween direction="horizontal" size="xs">
-                <Button
-                  variant="primary"
-                  formAction="submit"
-                  loading={status === 'submitting'}
-                  disabled={status === 'submitting'}
-                >
-                  Join waitlist
-                </Button>
-              </SpaceBetween>
-            }
-            errorText={status === 'error' ? errorMsg ?? 'Something went wrong.' : undefined}
-          >
-            <SpaceBetween size="s">
+
+        <Form
+          actions={
+            <SpaceBetween direction="horizontal" size="xs">
+              <Button
+                variant="primary"
+                formAction="submit"
+                loading={status === 'submitting'}
+                disabled={status === 'submitting'}
+              >
+                Join waitlist
+              </Button>
+            </SpaceBetween>
+          }
+          errorText={status === 'error' ? errorMsg ?? 'Something went wrong.' : undefined}
+          onSubmit={handleSubmit as any}
+        >
+          <SpaceBetween size="s">
             <FormField label="Name (required)" description="Your full name">
               <Input
                 value={form.name}
                 onChange={e => setForm(f => ({ ...f, name: e.detail.value }))}
                 placeholder="Jane Doe"
-                ariaRequired
               />
             </FormField>
 
@@ -96,7 +97,6 @@ export function PublicPage() {
                 value={form.email}
                 onChange={e => setForm(f => ({ ...f, email: e.detail.value }))}
                 placeholder="jane@example.com"
-                ariaRequired
               />
             </FormField>
 
@@ -124,7 +124,10 @@ export function PublicPage() {
               />
             </FormField>
 
-            <FormField label="Additional information" description="Anything else you’d like us to know">
+            <FormField
+              label="Additional information"
+              description="Anything else you’d like us to know"
+            >
               <Textarea
                 value={form.notes}
                 onChange={e => setForm(f => ({ ...f, notes: e.detail.value }))}
@@ -134,9 +137,8 @@ export function PublicPage() {
             </FormField>
 
             {/* CAPTCHA widget will go here later */}
-            </SpaceBetween>
-          </Form>
-        </form>
+          </SpaceBetween>
+        </Form>
       </Container>
     </div>
   )
