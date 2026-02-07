@@ -24,8 +24,8 @@ export function PublicPage() {
   const [status, setStatus] = useState<Status>('idle')
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
 
-  const handleSubmit = async (event: CustomEvent) => {
-    event.preventDefault()
+  const handleSubmit = async () => {
+    // no event.preventDefault needed; we control submission here
     setStatus('submitting')
     setErrorMsg(null)
 
@@ -71,7 +71,7 @@ export function PublicPage() {
             <SpaceBetween direction="horizontal" size="xs">
               <Button
                 variant="primary"
-                formAction="submit"
+                onClick={handleSubmit}
                 loading={status === 'submitting'}
                 disabled={status === 'submitting'}
               >
@@ -80,7 +80,6 @@ export function PublicPage() {
             </SpaceBetween>
           }
           errorText={status === 'error' ? errorMsg ?? 'Something went wrong.' : undefined}
-          onSubmit={handleSubmit as any}
         >
           <SpaceBetween size="s">
             <FormField label="Name (required)" description="Your full name">
