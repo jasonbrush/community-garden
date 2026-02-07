@@ -1,13 +1,4 @@
 import { useState } from 'react'
-import Container from '@cloudscape-design/components/container'
-import Header from '@cloudscape-design/components/header'
-import SpaceBetween from '@cloudscape-design/components/space-between'
-import Form from '@cloudscape-design/components/form'
-import FormField from '@cloudscape-design/components/form-field'
-import Input from '@cloudscape-design/components/input'
-import Textarea from '@cloudscape-design/components/textarea'
-import Button from '@cloudscape-design/components/button'
-import Alert from '@cloudscape-design/components/alert'
 import { addGardenerPublic } from '../api/gardeners'
 
 type Status = 'idle' | 'submitting' | 'success' | 'error'
@@ -24,7 +15,15 @@ export function PublicPage() {
   const [status, setStatus] = useState<Status>('idle')
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
 
-  const handleSubmit = async () => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const { name, value } = e.target
+    setForm(prev => ({ ...prev, [name]: value }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
     setStatus('submitting')
     setErrorMsg(null)
 
@@ -37,7 +36,6 @@ export function PublicPage() {
         experience: form.experience || undefined,
         notes: form.notes || undefined,
       })
-
       setStatus('success')
       setForm({
         name: '',
@@ -47,104 +45,108 @@ export function PublicPage() {
         experience: '',
         notes: '',
       })
-    } catch (error: unknown) {
+    } catch (error: any) {
       console.error(error)
       setStatus('error')
-      setErrorMsg(error instanceof Error ? error.message : 'Something went wrong.')
-    } finally {
-      // leave status as success or error
+      setErrorMsg(error?.message ?? 'Something went wrong.')
     }
   }
 
   return (
-    <div style={{ maxWidth: 800, margin: '0 auto', padding: '2rem' }}>
-      <Container>
-        <Header variant="h1">Community Garden Waitlist</Header>
+    <main style={{ maxWidth: 600, margin: '0 auto', padding: '2rem' }}>
+      <h1>Community Garden Waitlist</h1>
+      <p>Sign up to be added to the waiting list for a plot.</p>
 
-        {status === 'success' && (
-          <Alert type="success" dismissible onDismiss={() => setStatus('idle')}>
-            Thanks! You&apos;ve been added to the list.
-          </Alert>
-        )}
+      {status === 'success' && (
+        <p style={{ color: 'green' }}>Thanks! You&apos;ve been added to the list.</p>
+      )}
+      {status === 'error' && (
+        <p style={{ color: 'red' }}>Error: {errorMsg}</p>
+      )}
 
-        {status === 'error' && (
-          <Alert type="error" dismissible onDismiss={() => setStatus('idle')}>
-            {errorMsg ?? 'Something went wrong.'}
-          </Alert>
-        )}
+      <form onSubmit={handleSubmit}>
+        <div style={{ marginBottom: '0.75rem' }}>
+          <label>
+            Name*<br />
+            <input
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              required
+              style={{ width: '100%' }}
+            />
+          </label>
+        </div>
 
-        <Form
-          actions={
-            <SpaceBetween direction="horizontal" size="xs">
-              <Button
-                variant="primary"
-                onClick={handleSubmit}
-                loading={status === 'submitting'}
-                disabled={status === 'submitting'}
-              >
-                Join waitlist
-              </Button>
-            </SpaceBetween>
-          }
-        >
-          <SpaceBetween size="s">
-            <FormField label="Name (required)" description="Your full name">
-              <Input
-                value={form.name}
-                onChange={e => setForm(f => ({ ...f, name: e.detail.value }))}
-                placeholder="Jane Doe"
-              />
-            </FormField>
+        <div style={{ marginBottom: '0.75rem' }}>
+          <label>
+            Email*<br />
+            <input
+              type="email"
+              name="email"
+              value={form.email}
+              onChange={handleChange}
+              required
+              style={{ width: '100%' }}
+            />
+          </label>
+        </div>
 
-            <FormField label="Email (required)" description="We’ll use this to contact you">
-              <Input
-                type="email"
-                value={form.email}
-                onChange={e => setForm(f => ({ ...f, email: e.detail.value }))}
-                placeholder="jane@example.com"
-              />
-            </FormField>
+        <div style={{ marginBottom: '0.75rem' }}>
+          <label>
+            Phone<br />
+            <input
+              name="phone"
+              value={form.phone}
+              onChange={handleChange}
+              style={{ width: '100%' }}
+            />
+          </label>
+        </div>
 
-            <FormField label="Phone" description="Optional, for time‑sensitive updates">
-              <Input
-                value={form.phone}
-                onChange={e => setForm(f => ({ ...f, phone: e.detail.value }))}
-                placeholder="(555) 123‑4567"
-              />
-            </FormField>
+        <div style={{ marginBottom: '0.75rem' }}>
+          <label>
+            Address<br />
+            <input
+              name="address"
+              value={form.address}
+              onChange={handleChange}
+              style={{ width: '100%' }}
+            />
+          </label>
+        </div>
 
-            <FormField label="Address" description="Neighborhood or full address">
-              <Input
-                value={form.address}
-                onChange={e => setForm(f => ({ ...f, address: e.detail.value }))}
-                placeholder="123 Garden St, Los Angeles"
-              />
-            </FormField>
+        <div style={{ marginBottom: '0.75rem' }}>
+          <label>
+            Gardening experience<br />
+            <input
+              name="experience"
+              value={form.experience}
+              onChange={handleChange}
+              style={{ width: '100%' }}
+            />
+          </label>
+        </div>
 
-            <FormField label="Gardening experience" description="Briefly describe your experience">
-              <Input
-                value={form.experience}
-                onChange={e => setForm(f => ({ ...f, experience: e.detail.value }))}
-                placeholder="Beginner / Intermediate / Advanced"
-              />
-            </FormField>
+        <div style={{ marginBottom: '0.75rem' }}>
+          <label>
+            Additional information<br />
+            <textarea
+              name="notes"
+              value={form.notes}
+              onChange={handleChange}
+              rows={4}
+              style={{ width: '100%' }}
+            />
+          </label>
+        </div>
 
-            <FormField
-              label="Additional information"
-              description="Anything else you’d like us to know"
-            >
-              <Textarea
-                value={form.notes}
-                onChange={e => setForm(f => ({ ...f, notes: e.detail.value }))}
-                placeholder="Preferred crops, schedule constraints, accessibility needs, etc."
-                rows={4}
-              />
-            </FormField>
+        {/* CAPTCHA placeholder for later */}
 
-            {/* CAPTCHA widget will go here later */}
-          </SpaceBetween>
-        </Form>
-      </Container>
-    </div>
+        <button type="submit" disabled={status === 'submitting'}>
+          {status === 'submitting' ? 'Submitting…' : 'Join waitlist'}
+        </button>
+      </form>
+    </main>
   )
 }
