@@ -10,6 +10,8 @@ import './index.css'
 // Public page component
 import { PublicPage } from './pages/PublicPage'
 
+console.log('*** MAIN.TSX RENDERING PUBLICPAGE ***')
+
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <PublicPage />
