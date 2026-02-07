@@ -25,7 +25,6 @@ export function PublicPage() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
 
   const handleSubmit = async () => {
-    // no event.preventDefault needed; we control submission here
     setStatus('submitting')
     setErrorMsg(null)
 
@@ -52,6 +51,8 @@ export function PublicPage() {
       console.error(error)
       setStatus('error')
       setErrorMsg(error instanceof Error ? error.message : 'Something went wrong.')
+    } finally {
+      // leave status as success or error
     }
   }
 
@@ -63,6 +64,12 @@ export function PublicPage() {
         {status === 'success' && (
           <Alert type="success" dismissible onDismiss={() => setStatus('idle')}>
             Thanks! You&apos;ve been added to the list.
+          </Alert>
+        )}
+
+        {status === 'error' && (
+          <Alert type="error" dismissible onDismiss={() => setStatus('idle')}>
+            {errorMsg ?? 'Something went wrong.'}
           </Alert>
         )}
 
@@ -79,7 +86,6 @@ export function PublicPage() {
               </Button>
             </SpaceBetween>
           }
-          errorText={status === 'error' ? errorMsg ?? 'Something went wrong.' : undefined}
         >
           <SpaceBetween size="s">
             <FormField label="Name (required)" description="Your full name">
