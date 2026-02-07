@@ -36,6 +36,7 @@ export function PublicPage() {
         experience: form.experience || undefined,
         notes: form.notes || undefined,
       })
+
       setStatus('success')
       setForm({
         name: '',
@@ -48,7 +49,13 @@ export function PublicPage() {
     } catch (error: any) {
       console.error(error)
       setStatus('error')
-      setErrorMsg(error?.message ?? 'Something went wrong.')
+
+      // Postgres unique_violation (email already exists) is 23505[web:338][web:353]
+      if (error?.code === '23505') {
+        setErrorMsg('This email has already signed up.')
+      } else {
+        setErrorMsg(error?.message ?? 'Something went wrong.')
+      }
     }
   }
 
@@ -58,7 +65,9 @@ export function PublicPage() {
       <p>Sign up to be added to the waiting list for a plot.</p>
 
       {status === 'success' && (
-        <p style={{ color: 'green' }}>Thanks! You&apos;ve been added to the list.</p>
+        <p style={{ color: 'green' }}>
+          Thanks! You&apos;ve been added to the list.
+        </p>
       )}
       {status === 'error' && (
         <p style={{ color: 'red' }}>Error: {errorMsg}</p>
