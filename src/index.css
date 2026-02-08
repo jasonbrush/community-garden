@@ -1,5 +1,183 @@
 /* Minimal base styles - Cloudscape global-styles provides the design system */
+:root {
+  --garden-teal: #1aa9bc;
+  --garden-green: #457c39;
+  --garden-yellow: #ffeb00;
+  --garden-cream: #fef9f7;
+  --garden-brown: #c2b4a6;
+  --garden-olive: #6e7f29;
+  --garden-gold: #e7b300;
+
+  /* Typography */
+  --font-heading: 'Righteous', sans-serif;
+  --font-body: 'Nunito', sans-serif;
+
+  /* Override Cloudscape line height tokens */
+  --line-height-heading-xl-hko6p0: 1.0 !important;
+  --line-height-heading-l-hko6p0: 1.05 !important;
+  --line-height-heading-m-hko6p0: 1.1 !important;
+
+  /* Override Cloudscape layout background */
+  --color-background-layout-main: #c2b4a6;
+  --color-background-layout-main-5ilwcb: #c2b4a6;
+
+  /* Container */
+  --color-background-container-content: #fef9f7;
+  --color-background-container-content-6u8rvp: #fef9f7;
+  --color-background-container-header: #6e7f29;
+  --color-background-container-header-gs3mbe: #6e7f29;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
+  background-color: #c2b4a6;
+}
+
+#root {
+  min-height: 100vh;
+  padding: 0 !important;
+}
+
+/* Add padding to header content inside the brown stripe */
+[class*="header-variant-high-contrast"] {
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  padding-top: 40px !important;
+}
+
+/* Target the header container directly */
+[class*="awsui_header"] {
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+
+/* Target ContentLayout header specifically */
+div[class*="content-layout"] > div[class*="header"] {
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  padding-top: 60px !important;
+}
+
+/* Add padding to content layout but not the header */
+#root > div > div:not([class*="header"]) {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* Ensure main content area has side padding */
+[class*="content-layout"] > div:last-child {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+}
+
+/* Typography Scale */
+
+/* Custom class for tight heading */
+.tight-heading h1,
+.tight-heading span {
+  line-height: 0.8 !important;
+}
+
+/* Target exact Cloudscape classes */
+.awsui_heading_2qdw9_1rr34_377,
+.awsui_heading-variant-h1_2qdw9_1rr34_402,
+h1.awsui_heading_2qdw9_1rr34_377 {
+  line-height: 0.95 !important;
+}
+
+.awsui_heading-text_2qdw9_1rr34_418,
+.awsui_heading-text_105ke_268sp_5,
+.awsui_heading-text-variant-h1_2qdw9_1rr34_421 {
+  line-height: 0.95 !important;
+  font-family: var(--font-heading) !important;
+  display: inline !important;
+}
+
+/* Override Cloudscape heading fonts and line heights - very aggressive */
+[class*="awsui"] h1,
+h1[class*="awsui"],
+.awsui-context-content-header h1,
+header h1 {
+  font-family: var(--font-heading) !important;
+  line-height: 0.95 !important;
+}
+
+/* Target the span inside h1 that contains the actual text */
+h1 span[class*="awsui_heading-text"],
+span[class*="awsui_heading-text-variant-h1"] {
+  font-family: var(--font-heading) !important;
+  line-height: 0.95 !important;
+  display: inline !important;
+}
+
+[class*="awsui_heading"] h2,
+[class*="awsui_heading"] h3,
+h2[class*="awsui"],
+h3[class*="awsui"] {
+  font-family: var(--font-body) !important;
+}
+
+h2[class*="awsui"] {
+  line-height: 1.05 !important;
+}
+
+h3[class*="awsui"] {
+  line-height: 1.1 !important;
+}
+
+/* Direct element targeting */
+h1 {
+  font-family: var(--font-heading) !important;
+  font-size: clamp(42px, 5vw, 56px) !important;
+  font-weight: 400 !important;
+  line-height: 0.95 !important;
+  text-transform: capitalize;
+  margin: 0 0 1rem 0;
+}
+
+/* H2 – Section heading */
+h2 {
+  font-family: var(--font-body);
+  font-size: clamp(28px, 3.5vw, 32px);
+  font-weight: 700;
+  line-height: 1.05;
+  text-transform: capitalize;
+  margin: 0 0 0.875rem 0;
+}
+
+/* H3 – Subheading / callout */
+h3 {
+  font-family: var(--font-body);
+  font-size: clamp(22px, 2.5vw, 24px);
+  font-weight: 600;
+  line-height: 1.1;
+  text-transform: none;
+  margin: 0 0 0.75rem 0;
+}
+
+/* Body text */
+body,
+p,
+li,
+div {
+  font-family: var(--font-body);
+  font-size: clamp(16px, 1.5vw, 18px);
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+p {
+  margin: 0 0 1rem 0;
+}
+
+/* Small text / captions */
+small,
+.caption,
+.small-text {
+  font-family: var(--font-body);
+  font-size: clamp(13px, 1.2vw, 14px);
+  font-weight: 400;
+  line-height: 1.4;
 }

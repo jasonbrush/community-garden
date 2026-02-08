@@ -22,7 +22,10 @@ export function SignUpForm({ onSuccess, onError }: SignUpFormProps) {
     name: '',
     email: '',
     phone: '',
-    address: '',
+    addressStreet: '',
+    addressCity: '',
+    addressState: '',
+    addressZip: '',
     experience: '',
     notes: '',
   })
@@ -38,8 +41,8 @@ export function SignUpForm({ onSuccess, onError }: SignUpFormProps) {
     e?.preventDefault?.()
     setIsSubmitting(true)
 
-    if (!form.name.trim() || !form.email.trim()) {
-      onError('Please fill in required fields (name and email).')
+    if (!form.name.trim() || !form.email.trim() || !form.phone.trim() || !form.addressStreet.trim()) {
+      onError('Please fill in required fields (name, email, phone, and street address).')
       setIsSubmitting(false)
       return
     }
@@ -51,11 +54,20 @@ export function SignUpForm({ onSuccess, onError }: SignUpFormProps) {
     }
 
     try {
+      // Concatenate address fields
+      const addressParts = [
+        form.addressStreet,
+        form.addressCity,
+        form.addressState,
+        form.addressZip
+      ].filter(part => part.trim());
+      const fullAddress = addressParts.length > 0 ? addressParts.join(', ') : undefined;
+
       await addGardenerPublic({
         name: form.name,
         email: form.email,
         phone: form.phone || undefined,
-        address: form.address || undefined,
+        address: fullAddress,
         experience: form.experience || undefined,
         notes: form.notes || undefined,
         captchaToken,
@@ -65,7 +77,10 @@ export function SignUpForm({ onSuccess, onError }: SignUpFormProps) {
         name: '',
         email: '',
         phone: '',
-        address: '',
+        addressStreet: '',
+        addressCity: '',
+        addressState: '',
+        addressZip: '',
         experience: '',
         notes: '',
       })
@@ -121,23 +136,44 @@ export function SignUpForm({ onSuccess, onError }: SignUpFormProps) {
             />
           </FormField>
 
-          <FormField label="Phone" description="Optional">
+          <FormField label="Phone" description="Required">
             <Input
               value={form.phone}
               onChange={handleChange('phone')}
               placeholder="Phone number"
+              ariaRequired
             />
           </FormField>
 
-          <FormField label="Address" description="Optional">
-            <Input
-              value={form.address}
-              onChange={handleChange('address')}
-              placeholder="Street address"
-            />
+          <FormField label="Address" description="Required">
+            <SpaceBetween size="s">
+              <Input
+                value={form.addressStreet}
+                onChange={handleChange('addressStreet')}
+                placeholder="Street address"
+                ariaRequired
+              />
+              <Input
+                value={form.addressCity}
+                onChange={handleChange('addressCity')}
+                placeholder="City"
+              />
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <Input
+                  value={form.addressState}
+                  onChange={handleChange('addressState')}
+                  placeholder="State"
+                />
+                <Input
+                  value={form.addressZip}
+                  onChange={handleChange('addressZip')}
+                  placeholder="ZIP"
+                />
+              </div>
+            </SpaceBetween>
           </FormField>
 
-          <FormField label="Gardening experience" description="Optional">
+          <FormField label="Gardening experience">
             <Input
               value={form.experience}
               onChange={handleChange('experience')}
@@ -145,7 +181,7 @@ export function SignUpForm({ onSuccess, onError }: SignUpFormProps) {
             />
           </FormField>
 
-          <FormField label="Additional information" description="Optional">
+          <FormField label="Additional information">
             <Textarea
               value={form.notes}
               onChange={handleChange('notes')}
