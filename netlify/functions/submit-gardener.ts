@@ -6,9 +6,29 @@ const SUPABASE_URL = process.env.SUPABASE_URL as string
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY as string
 const RECAPTCHA_SECRET = process.env.RECAPTCHA_SECRET as string
 
+function checkEnv() {
+  const missing: string[] = []
+  if (!SUPABASE_URL) missing.push('SUPABASE_URL')
+  if (!SUPABASE_SERVICE_ROLE_KEY) missing.push('SUPABASE_SERVICE_ROLE_KEY')
+  if (!RECAPTCHA_SECRET) missing.push('RECAPTCHA_SECRET')
+  if (missing.length) {
+    return { ok: false, message: `Missing env vars: ${missing.join(', ')}. Add them in Netlify → Site settings → Environment variables.` }
+  }
+  return { ok: true }
+}
+
 const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
 
 export const handler: Handler = async (event) => {
+  const envCheck = checkEnv()
+  if (!envCheck.ok) {
+    console.error(envCheck.message)
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ message: 'Server configuration error' }),
+    }
+  }
+
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
