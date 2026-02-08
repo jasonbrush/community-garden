@@ -18,7 +18,7 @@ export function PublicPage() {
   const [status, setStatus] = useState<Status>('idle')
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
   const [captchaToken, setCaptchaToken] = useState<string | null>(null)
-  const recaptchaRef = useRef<ReCAPTCHA | null>(null)
+  const recaptchaRef = useRef<any>(null)
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -167,7 +167,7 @@ export function PublicPage() {
         <div style={{ marginBottom: '0.75rem' }}>
           <ReCAPTCHA
             sitekey={RECAPTCHA_SITE_KEY}
-            onChange={token => setCaptchaToken(token)}
+            onChange={(token: string | null) => setCaptchaToken(token)}
             ref={recaptchaRef}
           />
         </div>
