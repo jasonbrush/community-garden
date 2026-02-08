@@ -1,5 +1,16 @@
 import { useState, useRef } from 'react'
 import ReCAPTCHA from 'react-google-recaptcha'
+import {
+  ContentLayout,
+  Form,
+  FormField,
+  Header,
+  Input,
+  Textarea,
+  Button,
+  SpaceBetween,
+  Flashbar,
+} from '@cloudscape-design/components'
 import { addGardenerPublic } from '../api/gardeners'
 
 type Status = 'idle' | 'submitting' | 'success' | 'error'
@@ -20,17 +31,20 @@ export function PublicPage() {
   const [captchaToken, setCaptchaToken] = useState<string | null>(null)
   const recaptchaRef = useRef<any>(null)
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const { name, value } = e.target
-    setForm(prev => ({ ...prev, [name]: value }))
+  const handleChange = (field: string) => (e: { detail: { value: string } }) => {
+    setForm(prev => ({ ...prev, [field]: e.detail.value }))
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const handleSubmit = async (e?: React.FormEvent | { preventDefault?: () => void }) => {
+    e?.preventDefault?.()
     setStatus('submitting')
     setErrorMsg(null)
+
+    if (!form.name.trim() || !form.email.trim()) {
+      setStatus('error')
+      setErrorMsg('Please fill in required fields (name and email).')
+      return
+    }
 
     if (!captchaToken) {
       setStatus('error')
@@ -64,7 +78,6 @@ export function PublicPage() {
       console.error(error)
       setStatus('error')
 
-      // 23505 = Postgres unique_violation (email already exists)[web:338][web:353]
       if (error?.code === '23505') {
         setErrorMsg('This email has already signed up.')
       } else {
@@ -73,109 +86,118 @@ export function PublicPage() {
     }
   }
 
+  const flashItems: Array<{ type: 'success' | 'error'; content: string; dismissible: boolean; id?: string; onDismiss?: () => void }> = []
+  if (status === 'success') {
+    flashItems.push({
+      type: 'success',
+      content: "Thanks! You've been added to the list.",
+      dismissible: true,
+      id: 'success',
+      onDismiss: () => setStatus('idle'),
+    })
+  }
+  if (status === 'error' && errorMsg) {
+    flashItems.push({
+      type: 'error',
+      content: `Error: ${errorMsg}`,
+      dismissible: true,
+      id: 'error',
+      onDismiss: () => setStatus('idle'),
+    })
+  }
+
   return (
-    <main style={{ maxWidth: 600, margin: '0 auto', padding: '2rem' }}>
-      <h1>Community Garden Waitlist</h1>
-      <p>Sign up to be added to the waiting list for a plot.</p>
-
-      {status === 'success' && (
-        <p style={{ color: 'green' }}>
-          Thanks! You&apos;ve been added to the list.
-        </p>
-      )}
-      {status === 'error' && (
-        <p style={{ color: 'red' }}>Error: {errorMsg}</p>
-      )}
-
+    <ContentLayout
+      header={
+        <Header variant="h1" description="Sign up to be added to the waiting list for a plot.">
+          Community Garden Waitlist
+        </Header>
+      }
+      notifications={flashItems.length > 0 ? <Flashbar items={flashItems} /> : undefined}
+      maxContentWidth={720}
+    >
       <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: '0.75rem' }}>
-          <label>
-            Name*<br />
-            <input
-              name="name"
-              value={form.name}
-              onChange={handleChange}
-              required
-              style={{ width: '100%' }}
-            />
-          </label>
-        </div>
+        <Form
+          actions={
+            <SpaceBetween direction="horizontal" size="xs">
+              <Button
+                variant="primary"
+                onClick={() => handleSubmit()}
+                disabled={status === 'submitting'}
+                loading={status === 'submitting'}
+                loadingText="Submitting…"
+              >
+                Join waitlist
+              </Button>
+            </SpaceBetween>
+          }
+        >
+          <SpaceBetween size="l">
+            <FormField label="Name" description="Required" errorText={undefined}>
+              <Input
+                value={form.name}
+                onChange={handleChange('name')}
+                placeholder="Your name"
+                ariaRequired
+              />
+            </FormField>
 
-        <div style={{ marginBottom: '0.75rem' }}>
-          <label>
-            Email*<br />
-            <input
-              type="email"
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              required
-              style={{ width: '100%' }}
-            />
-          </label>
-        </div>
+            <FormField label="Email" description="Required" errorText={undefined}>
+              <Input
+                type="email"
+                value={form.email}
+                onChange={handleChange('email')}
+                placeholder="your@email.com"
+                ariaRequired
+              />
+            </FormField>
 
-        <div style={{ marginBottom: '0.75rem' }}>
-          <label>
-            Phone<br />
-            <input
-              name="phone"
-              value={form.phone}
-              onChange={handleChange}
-              style={{ width: '100%' }}
-            />
-          </label>
-        </div>
+            <FormField label="Phone" description="Optional">
+              <Input
+                value={form.phone}
+                onChange={handleChange('phone')}
+                placeholder="Phone number"
+              />
+            </FormField>
 
-        <div style={{ marginBottom: '0.75rem' }}>
-          <label>
-            Address<br />
-            <input
-              name="address"
-              value={form.address}
-              onChange={handleChange}
-              style={{ width: '100%' }}
-            />
-          </label>
-        </div>
+            <FormField label="Address" description="Optional">
+              <Input
+                value={form.address}
+                onChange={handleChange('address')}
+                placeholder="Street address"
+              />
+            </FormField>
 
-        <div style={{ marginBottom: '0.75rem' }}>
-          <label>
-            Gardening experience<br />
-            <input
-              name="experience"
-              value={form.experience}
-              onChange={handleChange}
-              style={{ width: '100%' }}
-            />
-          </label>
-        </div>
+            <FormField label="Gardening experience" description="Optional">
+              <Input
+                value={form.experience}
+                onChange={handleChange('experience')}
+                placeholder="e.g., beginner, experienced, etc."
+              />
+            </FormField>
 
-        <div style={{ marginBottom: '0.75rem' }}>
-          <label>
-            Additional information<br />
-            <textarea
-              name="notes"
-              value={form.notes}
-              onChange={handleChange}
-              rows={4}
-              style={{ width: '100%' }}
-            />
-          </label>
-        </div>
+            <FormField label="Additional information" description="Optional">
+              <Textarea
+                value={form.notes}
+                onChange={handleChange('notes')}
+                placeholder="Any other details you'd like to share"
+                rows={4}
+              />
+            </FormField>
 
-        <div style={{ marginBottom: '0.75rem' }}>
-          <ReCAPTCHA
-            sitekey={RECAPTCHA_SITE_KEY}
-            onChange={(token: string | null) => setCaptchaToken(token)}
-            ref={recaptchaRef}
-          />
-        </div>
-
-        <button type="submit" disabled={status === 'submitting'}>
-          {status === 'submitting' ? 'Submitting…' : 'Join waitlist'}
-        </button>
+            <FormField
+              label="Security verification"
+              description="Please complete the CAPTCHA to verify you're human."
+            >
+              <ReCAPTCHA
+                sitekey={RECAPTCHA_SITE_KEY}
+                onChange={(token: string | null) => setCaptchaToken(token)}
+                ref={recaptchaRef}
+              />
+            </FormField>
+          </SpaceBetween>
+        </Form>
       </form>
-    </main>
+    </ContentLayout>
   )
 }
