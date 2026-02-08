@@ -1,4 +1,4 @@
-import { supabase } from '../supabaseClient'
+// src/api/gardeners.ts
 
 export type Gardener = {
   id: string
@@ -13,6 +13,7 @@ export type Gardener = {
   updated_at: string
 }
 
+// Public form goes through Netlify Function (handles reCAPTCHA + Supabase)
 export async function addGardenerPublic(payload: {
   name: string
   email: string
@@ -20,33 +21,21 @@ export async function addGardenerPublic(payload: {
   address?: string
   experience?: string
   notes?: string
-}) {
-  const { data: maxRows, error: maxErr } = await supabase
-    .from('gardeners')
-    .select('line_position')
-    .order('line_position', { ascending: false })
-    .limit(1)
+  captchaToken: string
+}): Promise<Gardener> {
+  const res = await fetch('/.netlify/functions/submit-gardener', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  })
 
-  if (maxErr) throw maxErr
-  const max = maxRows && maxRows.length > 0 ? maxRows[0].line_position : 0
-  const nextPosition = max + 1
+  const data = await res.json().catch(() => ({}))
 
-  const { data, error } = await supabase
-    .from('gardeners')
-    .insert([{ ...payload, line_position: nextPosition }])
-    .select()
-    .single()
+  if (!res.ok) {
+    const error: any = new Error(data.message || 'Request failed')
+    if (data.code) error.code = data.code
+    throw error
+  }
 
-  if (error) throw error
   return data as Gardener
-}
-
-export async function listGardeners(): Promise<Gardener[]> {
-  const { data, error } = await supabase
-    .from('gardeners')
-    .select('*')
-    .order('line_position', { ascending: true })
-
-  if (error) throw error
-  return data as Gardener[]
 }

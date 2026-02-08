@@ -1,7 +1,10 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
+import ReCAPTCHA from 'react-google-recaptcha'
 import { addGardenerPublic } from '../api/gardeners'
 
 type Status = 'idle' | 'submitting' | 'success' | 'error'
+
+const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY
 
 export function PublicPage() {
   const [form, setForm] = useState({
@@ -14,6 +17,8 @@ export function PublicPage() {
   })
   const [status, setStatus] = useState<Status>('idle')
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null)
+  const recaptchaRef = useRef<ReCAPTCHA | null>(null)
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -27,6 +32,12 @@ export function PublicPage() {
     setStatus('submitting')
     setErrorMsg(null)
 
+    if (!captchaToken) {
+      setStatus('error')
+      setErrorMsg('Please complete the CAPTCHA before submitting.')
+      return
+    }
+
     try {
       await addGardenerPublic({
         name: form.name,
@@ -35,6 +46,7 @@ export function PublicPage() {
         address: form.address || undefined,
         experience: form.experience || undefined,
         notes: form.notes || undefined,
+        captchaToken,
       })
 
       setStatus('success')
@@ -46,11 +58,13 @@ export function PublicPage() {
         experience: '',
         notes: '',
       })
+      setCaptchaToken(null)
+      recaptchaRef.current?.reset()
     } catch (error: any) {
       console.error(error)
       setStatus('error')
 
-      // Postgres unique_violation (email already exists) is 23505[web:338][web:353]
+      // 23505 = Postgres unique_violation (email already exists)[web:338][web:353]
       if (error?.code === '23505') {
         setErrorMsg('This email has already signed up.')
       } else {
@@ -150,7 +164,13 @@ export function PublicPage() {
           </label>
         </div>
 
-        {/* CAPTCHA placeholder for later */}
+        <div style={{ marginBottom: '0.75rem' }}>
+          <ReCAPTCHA
+            sitekey={RECAPTCHA_SITE_KEY}
+            onChange={token => setCaptchaToken(token)}
+            ref={recaptchaRef}
+          />
+        </div>
 
         <button type="submit" disabled={status === 'submitting'}>
           {status === 'submitting' ? 'Submitting…' : 'Join waitlist'}
