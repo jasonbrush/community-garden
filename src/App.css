@@ -191,8 +191,8 @@ button[class*="awsui_button"][class*="variant-primary"] {
 }
 
 button[class*="awsui_button"][class*="variant-primary"]:hover {
-  background-color: #007a85 !important;
-  border-color: #007a85 !important;
+  background-color: #00b8c9 !important;
+  border-color: #00b8c9 !important;
   /* Material Design elevation level 8 */
   box-shadow: 
     0 5px 5px -3px rgba(0, 0, 0, 0.2),
