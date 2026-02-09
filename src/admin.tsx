@@ -6,7 +6,7 @@ import './pages/AdminPage.css'
 import { AdminPage } from './pages/AdminPage'
 
 // Set visual mode to light before rendering
-applyMode('light')
+applyMode('light' as any)
 
 // Also set data attribute on html element
 document.documentElement.setAttribute('data-awsui-mode', 'light')

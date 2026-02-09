@@ -1,6 +1,3 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-
 // Simple router that loads the appropriate entry point
 const path = window.location.pathname
 

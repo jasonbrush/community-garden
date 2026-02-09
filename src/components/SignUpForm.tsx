@@ -230,7 +230,7 @@ export function SignUpForm({ onSuccess, onError }: SignUpFormProps) {
       recaptchaRef.current?.reset()
       
       // Check if ZIP is not 90027 and show priority message
-      const isOutsideFranklinHills = form.addressZip && form.addressZip !== '90027'
+      const isOutsideFranklinHills = form.addressZip ? form.addressZip !== '90027' : false
       onSuccess(isOutsideFranklinHills)
     } catch (error: any) {
       console.error(error)
