@@ -67,7 +67,7 @@ export function LandingPage() {
               variant="h1"
               description="An organic community garden in the Franklin Hills neighborhood of Los Angeles"
             >
-              The Norman Harriton Community&nbsp;Garden
+              The Norman Harriton Community Garden
             </Header>
           </div>
         }

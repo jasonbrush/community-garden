@@ -113,9 +113,23 @@ div[class*="awsui_content_5gtk3"] {
   padding-bottom: 40px !important;
 }
 
-/* Remove borders from containers */
+/* Remove borders from containers and add prominent drop shadows */
 div[class*="awsui_root_14iqq"][class*="variant-stacked"] {
   border: none !important;
+  box-shadow: 
+    0 4px 6px rgba(0, 0, 0, 0.1),
+    0 2px 4px rgba(0, 0, 0, 0.06),
+    0 10px 20px rgba(0, 0, 0, 0.08) !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Hover effect for containers */
+div[class*="awsui_root_14iqq"][class*="variant-stacked"]:hover {
+  box-shadow: 
+    0 8px 12px rgba(0, 0, 0, 0.15),
+    0 4px 8px rgba(0, 0, 0, 0.1),
+    0 16px 32px rgba(0, 0, 0, 0.12) !important;
+  transform: translateY(-2px) !important;
 }
 
 /* Ensure brown header stretches edge-to-edge */
