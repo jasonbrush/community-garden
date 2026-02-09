@@ -1,12 +1,10 @@
 /* Minimal base styles - Cloudscape global-styles provides the design system */
 :root {
-  --garden-teal: #1aa9bc;
-  --garden-green: #457c39;
-  --garden-yellow: #ffeb00;
-  --garden-cream: #fef9f7;
-  --garden-brown: #c2b4a6;
-  --garden-olive: #6e7f29;
-  --garden-gold: #e7b300;
+  --garden-coral: #fe9f97;
+  --garden-orange: #fbae17;
+  --garden-teal: #0095a3;
+  --garden-light-gray: #dddddd;
+  --garden-dark-gray: #35342f;
 
   /* Typography */
   --font-heading: 'Righteous', sans-serif;
@@ -18,20 +16,23 @@
   --line-height-heading-m-hko6p0: 1.1 !important;
 
   /* Override Cloudscape layout background */
-  --color-background-layout-main: #635045;
-  --color-background-layout-main-5ilwcb: #635045;
+  --color-background-layout-main: #35342f;
+  --color-background-layout-main-5ilwcb: #35342f;
 
   /* Container */
-  --color-background-container-content: #fef9f7;
-  --color-background-container-content-6u8rvp: #fef9f7;
-  --color-background-container-header: #6e7f29;
-  --color-background-container-header-gs3mbe: #6e7f29;
+  --color-background-container-content: #ffffff;
+  --color-background-container-content-6u8rvp: #ffffff;
+  --color-background-container-header: #fbae17;
+  --color-background-container-header-gs3mbe: #fbae17;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: #635045;
+  background-color: #35342f;
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
 }
 
 #root {

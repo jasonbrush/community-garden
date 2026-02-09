@@ -60,7 +60,7 @@ export function LandingPage() {
     <>
       <ContentLayout
         headerVariant="high-contrast"
-        headerBackgroundStyle="#457c39"
+        headerBackgroundStyle="#0095a3"
         header={
           <div className="tight-heading">
             <Header
