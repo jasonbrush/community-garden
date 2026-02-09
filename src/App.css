@@ -113,13 +113,14 @@ div[class*="awsui_content_5gtk3"] {
   padding-bottom: 40px !important;
 }
 
-/* Remove borders from containers and add prominent drop shadows */
+/* Remove borders from containers and add Material Design elevation shadows */
 div[class*="awsui_root_14iqq"][class*="variant-stacked"] {
   border: none !important;
+  /* Material Design elevation level 4 */
   box-shadow: 
-    0 4px 6px rgba(0, 0, 0, 0.1),
-    0 2px 4px rgba(0, 0, 0, 0.06),
-    0 10px 20px rgba(0, 0, 0, 0.08) !important;
+    0 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0 4px 5px 0 rgba(0, 0, 0, 0.14),
+    0 1px 10px 0 rgba(0, 0, 0, 0.12) !important;
 }
 
 /* Ensure brown header stretches edge-to-edge */
