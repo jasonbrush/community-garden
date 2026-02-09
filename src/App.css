@@ -76,6 +76,25 @@
   margin-right: auto !important;
 }
 
+/* Update page header h1 color to match new green background */
+.tight-heading h1,
+.tight-heading h1 span[class*="awsui_heading-text"] {
+  color: #ffeb00 !important;
+}
+
+/* Set h2 color to match page header green */
+div[class*="awsui_header_14iqq"] h2[class*="awsui_heading"],
+div[class*="awsui_header_14iqq"] h2 span[class*="awsui_heading-text"],
+h2[class*="awsui_heading"],
+h2 span[class*="awsui_heading-text"] {
+  color: #457c39 !important;
+}
+
+/* Update theme context for header */
+div[class*="awsui-context-content-header"] {
+  --color-text-heading-default: #ffeb00 !important;
+}
+
 /* Add space below the brown header before first container */
 [class*="content-layout"] > div:not([class*="header"]) {
   padding-top: 0px !important;
@@ -112,8 +131,23 @@ div[style*="background: rgb(99, 80, 69)"],
   margin-right: -50vw !important;
 }
 
+/* Ensure green header stretches edge-to-edge */
+div[style*="background-color: rgb(69, 124, 57)"],
+div[style*="background: rgb(69, 124, 57)"],
+div[style*="background-color:#457c39"],
+div[style*="background:#457c39"],
+[class*="awsui"][class*="header"][style*="457c39"] {
+  max-width: none !important;
+  width: 100vw !important;
+  position: relative !important;
+  left: 50% !important;
+  right: 50% !important;
+  margin-left: -50vw !important;
+  margin-right: -50vw !important;
+}
+
 .tight-heading {
-  max-width: 800px !important;
+  max-width: 1000px !important;
   margin-left: auto !important;
   margin-right: auto !important;
   position: relative !important;
@@ -128,7 +162,7 @@ div[style*="background: rgb(99, 80, 69)"],
 
 /* Ensure container headers have sufficient contrast */
 div[class*="awsui_header_14iqq"] {
-  background-color: #5a6823 !important;
+  background-color: #c2b4a6 !important;
 }
 
 /* Set h2 color to lighter gold for better contrast */
@@ -139,13 +173,21 @@ h2 span[class*="awsui_heading-text"] {
 
 /* Update primary button color */
 button[class*="awsui_button"][class*="variant-primary"] {
-  background-color: #1aa9bc !important;
-  border-color: #1aa9bc !important;
+  background-color: #0095a3 !important;
+  border-color: #0095a3 !important;
+  color: #ffffff !important;
+  border-radius: 8px !important;
 }
 
 button[class*="awsui_button"][class*="variant-primary"]:hover {
-  background-color: #158a9a !important;
-  border-color: #158a9a !important;
+  background-color: #007a85 !important;
+  border-color: #007a85 !important;
+}
+
+button[class*="awsui_button"][class*="variant-primary"] span,
+button[class*="awsui_button"][class*="variant-primary"] [class*="awsui_content"],
+button[class*="awsui_button"][class*="variant-primary"] [class*="awsui_label"] {
+  color: #ffffff !important;
 }
 
 /* Align modal form padding with header */
@@ -153,6 +195,17 @@ div[class*="awsui_content_1d2i7"][class*="1e7ip"],
 div[class*="awsui_header_1d2i7"][class*="1e7ip"] {
   padding-left: 20px !important;
   padding-right: 20px !important;
+}
+
+/* Match modal header to page header color scheme */
+div[class*="awsui_header_1d2i7"][class*="1e7ip"] {
+  background-color: #457c39 !important;
+}
+
+div[class*="awsui_header_1d2i7"][class*="1e7ip"] h2,
+div[class*="awsui_header_1d2i7"][class*="1e7ip"] h2 span,
+div[class*="awsui_header_1d2i7"][class*="1e7ip"] span[class*="header--text"] {
+  color: #ffeb00 !important;
 }
 
 /* Remove any extra padding from all nested elements inside modal header */
@@ -165,4 +218,85 @@ div[class*="awsui_header_1d2i7"][class*="1e7ip"] span {
   padding-right: 0 !important;
   margin-left: 0 !important;
   margin-right: 0 !important;
+}
+
+/* Update success flashbar background color */
+div[class*="awsui_flash"][class*="type-success"] {
+  background-color: #2d8f45 !important;
+}
+
+div[class*="awsui_flash"][class*="type-success"] * {
+  color: #ffffff !important;
+}
+
+/* Update error flashbar background color */
+div[class*="awsui_flash"][class*="type-error"] {
+  background-color: #c02620 !important;
+}
+
+div[class*="awsui_flash"][class*="type-error"] * {
+  color: #ffffff !important;
+}
+
+/* Widen content containers */
+[class*="awsui_layout-main"] {
+  max-width: 1000px !important;
+}
+
+div[class*="awsui_content_5gtk3"],
+div[class*="content-layout"] > div:not([class*="header"]) {
+  max-width: 1000px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Override Cloudscape content width calculation */
+div[class*="awsui_vertical"][class*="awsui_vertical-xl"] {
+  width: 100% !important;
+  max-width: 1000px !important;
+}
+
+/* Override Cloudscape CSS variable for content width */
+div[class*="awsui_layout_5gtk3"] {
+  --awsui-content-layout-max-content-width-4hh3rt: 1000px !important;
+}
+
+/* Ensure modal close button meets contrast requirements */
+button[class*="awsui_dismiss-control"] {
+  color: #000000 !important;
+}
+
+button[class*="awsui_dismiss-control"] svg,
+button[class*="awsui_dismiss-control"] path {
+  stroke: #000000 !important;
+}
+
+/* Reduce bottom padding in containers */
+div[class*="awsui_content-inner"][class*="awsui_with-paddings"],
+div[class*="awsui_content_14iqq"] {
+  padding-bottom: 0px !important;
+}
+
+div[class*="awsui_root_14iqq"][class*="variant-stacked"] {
+  padding-bottom: 0px !important;
+}
+
+/* Add space above first form field in modal */
+div[class*="awsui_content_1d2i7"][class*="1e7ip"] form {
+  padding-top: 16px !important;
+}
+
+/* Make gardening experience and additional info fields full width in modal */
+/* Target fields by their label text */
+div[class*="awsui_content_1d2i7"] form div[class*="awsui_root_14mhv"]:has(label:contains("Gardening experience")) [class*="awsui_grid-column"],
+div[class*="awsui_content_1d2i7"] form div[class*="awsui_root_14mhv"]:has(label:contains("Additional information")) [class*="awsui_grid-column"] {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* Alternative approach - target by position more specifically */
+div[class*="awsui_content_1d2i7"] form [class*="awsui_root_18582"] > div:nth-child(6) [class*="awsui_grid-column"],
+div[class*="awsui_content_1d2i7"] form [class*="awsui_root_18582"] > div:nth-child(7) [class*="awsui_grid-column"] {
+  width: 100% !important;
+  max-width: 100% !important;
 }

@@ -13,7 +13,7 @@ export const communityGardenTheme: Theme = {
     },
   },
   tokens: {
-    colorBackgroundLayoutMain: '#c2b4a6',
+    colorBackgroundLayoutMain: '#635045',
     colorBackgroundContainerContent: '#fef9f7',
     colorBackgroundContainerHeader: '#6e7f29',
     colorBackgroundInputDefault: '#ffffff',

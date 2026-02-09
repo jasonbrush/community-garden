@@ -1,0 +1,149 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400">
+  <!-- Transparent background -->
+  <rect width="400" height="400" fill="transparent"/>
+  
+  <g stroke="#1a1a1a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    
+    <!-- Tomato 1 -->
+    <g transform="translate(60, 80)">
+      <circle cx="0" cy="0" r="18"/>
+      <path d="M-8 -20 L-6 -18 L-4 -20 L-2 -18 L0 -20 L2 -18 L4 -20 L6 -18 L8 -20"/>
+      <path d="M-6 -4 C-4 -2 -2 -2 0 -4"/>
+      <path d="M4 2 C6 4 8 4 10 2"/>
+    </g>
+    
+    <!-- Carrot 1 -->
+    <g transform="translate(180, 50) rotate(25)">
+      <path d="M0 0 L-3 20 L-2 35 L0 40 L2 35 L3 20 L0 0"/>
+      <path d="M-1 2 L-8 -8"/>
+      <path d="M0 0 L-2 -12"/>
+      <path d="M1 2 L8 -6"/>
+      <path d="M-2 12 L-4 12"/>
+      <path d="M2 18 L4 18"/>
+      <path d="M-1 25 L-3 26"/>
+    </g>
+    
+    <!-- Pepper 1 -->
+    <g transform="translate(320, 90)">
+      <path d="M0 -8 C-12 -6 -18 2 -18 14 C-18 26 -12 36 0 38 C12 36 18 26 18 14 C18 2 12 -6 0 -8"/>
+      <path d="M-2 -8 L-4 -14 L-2 -18"/>
+      <path d="M2 -8 L4 -14 L2 -18"/>
+      <path d="M-8 10 C-6 12 -4 12 -2 10"/>
+    </g>
+    
+    <!-- Eggplant 1 -->
+    <g transform="translate(100, 220)">
+      <ellipse cx="0" cy="10" rx="16" ry="24"/>
+      <path d="M-6 -14 C-4 -18 -2 -20 0 -20 C2 -20 4 -18 6 -14"/>
+      <path d="M-4 -14 L-6 -16 L-4 -18"/>
+      <path d="M0 -14 L0 -20"/>
+      <path d="M4 -14 L6 -16 L4 -18"/>
+    </g>
+    
+    <!-- Onion 1 -->
+    <g transform="translate(280, 200)">
+      <ellipse cx="0" cy="0" rx="14" ry="18"/>
+      <path d="M-2 -18 L-2 -26"/>
+      <path d="M2 -18 L2 -26"/>
+      <path d="M-6 -4 C-4 -2 -2 -2 0 -4"/>
+      <path d="M4 2 C6 4 8 4 10 2"/>
+    </g>
+    
+    <!-- Radish 1 -->
+    <g transform="translate(50, 340) rotate(-15)">
+      <circle cx="0" cy="0" r="12"/>
+      <path d="M-2 -12 L-4 -20"/>
+      <path d="M0 -12 L0 -22"/>
+      <path d="M2 -12 L4 -20"/>
+      <path d="M0 10 L0 16"/>
+    </g>
+    
+    <!-- Cucumber 1 -->
+    <g transform="translate(200, 280) rotate(45)">
+      <ellipse cx="0" cy="0" rx="10" ry="30"/>
+      <path d="M-4 -20 L-6 -22"/>
+      <path d="M4 -15 L6 -17"/>
+      <path d="M-4 -8 L-6 -10"/>
+      <path d="M4 0 L6 -2"/>
+      <path d="M-4 8 L-6 6"/>
+      <path d="M4 16 L6 14"/>
+    </g>
+    
+    <!-- Pumpkin 1 -->
+    <g transform="translate(340, 320)">
+      <ellipse cx="0" cy="0" rx="22" ry="18"/>
+      <path d="M-18 -4 C-16 0 -14 2 -10 0"/>
+      <path d="M-10 -6 C-8 -2 -6 -2 -4 -6"/>
+      <path d="M-4 -4 C-2 0 0 0 2 -4"/>
+      <path d="M2 -6 C4 -2 6 -2 8 -6"/>
+      <path d="M8 -4 C10 0 12 2 16 0"/>
+      <path d="M-2 -18 L0 -24 L2 -18"/>
+    </g>
+    
+    <!-- Tomato 2 (smaller) -->
+    <g transform="translate(240, 160)">
+      <circle cx="0" cy="0" r="14"/>
+      <path d="M-6 -16 L-4 -14 L-2 -16 L0 -14 L2 -16 L4 -14 L6 -16"/>
+    </g>
+    
+    <!-- Carrot 2 -->
+    <g transform="translate(140, 360) rotate(-35)">
+      <path d="M0 0 L-2 18 L-1 28 L0 32 L1 28 L2 18 L0 0"/>
+      <path d="M-1 2 L-6 -6"/>
+      <path d="M0 0 L-1 -10"/>
+      <path d="M1 2 L6 -5"/>
+    </g>
+    
+    <!-- Pepper 2 (smaller) -->
+    <g transform="translate(360, 240) rotate(15)">
+      <path d="M0 -6 C-10 -4 -14 2 -14 12 C-14 22 -10 30 0 32 C10 30 14 22 14 12 C14 2 10 -4 0 -6"/>
+      <path d="M-2 -6 L-3 -12"/>
+      <path d="M2 -6 L3 -12"/>
+    </g>
+    
+    <!-- Radish 2 -->
+    <g transform="translate(160, 140) rotate(25)">
+      <circle cx="0" cy="0" r="10"/>
+      <path d="M-2 -10 L-3 -16"/>
+      <path d="M0 -10 L0 -18"/>
+      <path d="M2 -10 L3 -16"/>
+    </g>
+    
+    <!-- Onion 2 (smaller) -->
+    <g transform="translate(40, 180)">
+      <ellipse cx="0" cy="0" rx="11" ry="14"/>
+      <path d="M-2 -14 L-2 -20"/>
+      <path d="M2 -14 L2 -20"/>
+    </g>
+    
+    <!-- Cucumber 2 -->
+    <g transform="translate(300, 40) rotate(-30)">
+      <ellipse cx="0" cy="0" rx="8" ry="24"/>
+      <path d="M-3 -16 L-5 -18"/>
+      <path d="M3 -12 L5 -14"/>
+      <path d="M-3 -4 L-5 -6"/>
+      <path d="M3 4 L5 2"/>
+      <path d="M-3 12 L-5 10"/>
+    </g>
+    
+    <!-- Small tomato 3 -->
+    <g transform="translate(380, 160)">
+      <circle cx="0" cy="0" r="10"/>
+      <path d="M-4 -12 L-2 -10 L0 -12 L2 -10 L4 -12"/>
+    </g>
+    
+    <!-- Small pepper 3 -->
+    <g transform="translate(20, 280)">
+      <path d="M0 -4 C-8 -2 -10 2 -10 10 C-10 18 -8 24 0 26 C8 24 10 18 10 10 C10 2 8 -2 0 -4"/>
+      <path d="M0 -4 L0 -10"/>
+    </g>
+    
+    <!-- Small carrot 3 -->
+    <g transform="translate(260, 360) rotate(60)">
+      <path d="M0 0 L-2 14 L-1 22 L0 26 L1 22 L2 14 L0 0"/>
+      <path d="M-1 2 L-5 -4"/>
+      <path d="M1 2 L5 -4"/>
+    </g>
+
+  </g>
+</svg>

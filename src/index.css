@@ -18,8 +18,8 @@
   --line-height-heading-m-hko6p0: 1.1 !important;
 
   /* Override Cloudscape layout background */
-  --color-background-layout-main: #c2b4a6;
-  --color-background-layout-main-5ilwcb: #c2b4a6;
+  --color-background-layout-main: #635045;
+  --color-background-layout-main-5ilwcb: #635045;
 
   /* Container */
   --color-background-container-content: #fef9f7;
@@ -31,7 +31,7 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: #c2b4a6;
+  background-color: #635045;
 }
 
 #root {

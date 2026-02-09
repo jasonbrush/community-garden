@@ -1,16 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { applyTheme } from '@cloudscape-design/components/theming'
-import '@cloudscape-design/global-styles/index.css'
-import './index.css'
-import './App.css'
-import { LandingPage } from './pages/LandingPage'
-import { communityGardenTheme } from './theme'
 
-applyTheme({ theme: communityGardenTheme })
+// Simple router that loads the appropriate entry point
+const path = window.location.pathname
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <LandingPage />
-  </React.StrictMode>,
-)
+if (path === '/admin') {
+  // Load admin entry point
+  import('./admin')
+} else {
+  // Load public entry point
+  import('./public')
+}
