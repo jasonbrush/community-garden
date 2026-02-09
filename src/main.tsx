@@ -1,3 +1,5 @@
+import '@cloudscape-design/global-styles/index.css'
+
 // Simple router that loads the appropriate entry point
 const path = window.location.pathname
 
